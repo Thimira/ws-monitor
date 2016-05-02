@@ -2,6 +2,8 @@
 
 A runtime and server monitor for Node.js applications with WebSocket based reporting.
 
+This allows cross-application monitoring stats sharing through WebSockets, allowing you to create central monitoring applications and dashboards.
+
 Still in Beta with very limited functionality. More options and customizability coming soon.
 
 ## Installation
@@ -26,9 +28,13 @@ You will see the following message on the Node.js console.
 
 You can then use any WebSocket client to connect with the monitor and start receiving the monitor data.
 
-#### Example - Monitoring from the Node.js application itself
+Multiple clients can be connected to the same monitor, and all messages will be broadcasted to all the clients alike.
 
-Use a WebSocket library, such as `ws` to create a client and connect to the monitor.
+#### Example - Monitoring from a Node.js application
+
+You can connect to the WebSocket server of the monitor through the same Node.js application which you have it installed, or from a different application, allowing cross-application monitor data sharing.
+
+In the Node.js application, use a WebSocket library, such as `ws` to create a client and connect to the monitor.
 
 ```js
 var WebSocket = require('ws');
@@ -41,27 +47,37 @@ ws.on('message', function(data, flags) {
 
 You will get the following messages on the console,
 
-    client connected to app monitor : IQ8KBIJZ600Y66R
-
     1462167081:HOSTNAME:0.35:4310102016:8506159104:0:14865080:31246592
 
     1462167086:HOSTNAME:5.357:4313698304:8506159104:0:15460720:32266496
 
     1462167091:HOSTNAME:10.393:4313415680:8506159104:0:15600072:32266496
 
-    1462167096:HOSTNAME:15.421:4313788416:8506159104:0:15656288:32266496
+    ....
 
-    1462167101:HOSTNAME:20.443:4313341952:8506159104:0:15700144:32266496
+    ....
 
+#### Example - Monitoring from a Javascript frontend
+
+If you want to monitor from the frontend - such as when you want to build a dashboard to view your Node.js application performance - you can use the javascript built-n WebSocket capability to connect to the WebSocket server of the monitor,
+
+```js
+    var exampleSocket = new WebSocket("ws://localhost:8080");
+
+    exampleSocket.onmessage = function (event) {
+        console.log(event.data);
+    };
+```
 
 ### Options
 
-The monitor object constructor accepts 2 parameters,
+The monitor object constructor accepts several parameters,
 
 ```js
 var monitor = new WSMonitor({
                             port : 10080,
-                            pollInterval : 1000
+                            pollInterval : 1000,
+                            debug : true
                             });
 ```
 
@@ -69,6 +85,7 @@ var monitor = new WSMonitor({
 |-----------|-----------|-------------|
 | port          | 8080   | The port on which the WebSocket server of the monitor will be started |
 | pollInterval  | 5000   | The interval in which the parameters are checked and reported, in milliseconds |
+| debug         | false  | Whether the debug messages should be printed out to console |
 
 ## Output Format
 
@@ -81,6 +98,14 @@ Example,
     1462167101:HOSTNAME:20.443:4313341952:8506159104:0:15700144:32266496
 
 Current version only supports this delimited output format. More formats support coming soon.
+
+## Resource Friendliness
+
+The WS-Monitor will keep track of the clients connected to it. And, if it detects that no clients are connected, it will automatically shutdown the monitoring process, and will start it up again when a client connects again, preventing the use of server resources unnecessarily,
+
+    [INFO] client disconnected from app monitor : 1R1ZFWHG47QILIK9
+    [INFO] no clients connected to app monitor
+    [INFO] halting app monitor
 
 ## Node.js version compatibility
 

@@ -18,7 +18,12 @@
     "reporting",
     "application",
     "ws",
-    "performance"
+    "performance",
+    "rfc6455",
+    "rfc-6455",
+    "6455",
+    "dashboard",
+    "ws-monitor"
   ],
   "author": "Thimira Amaratunga",
   "license": "MIT",
