@@ -1,0 +1,34 @@
+{
+  "name": "ws-monitor",
+  "version": "0.0.1",
+  "description": "A runtime and server monitor for Node.js applications with WebSocket based reporting.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Thimira/ws-monitor.git"
+  },
+  "keywords": [
+    "monitor",
+    "websocket",
+    "runtime",
+    "server",
+    "reporting",
+    "application",
+    "ws",
+    "performance"
+  ],
+  "author": "Thimira Amaratunga",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Thimira/ws-monitor/issues"
+  },
+  "homepage": "https://github.com/Thimira/ws-monitor#readme",
+  "dependencies": {
+    "monitor": "^0.6.10",
+    "underscore": "^1.8.3",
+    "ws": "^1.1.0"
+  }
+}
