@@ -1,6 +1,6 @@
 {
   "name": "ws-monitor",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A runtime and server monitor for Node.js applications with WebSocket based reporting.",
   "main": "index.js",
   "scripts": {
