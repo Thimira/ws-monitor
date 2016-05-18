@@ -4,6 +4,8 @@ A runtime and server monitor for Node.js applications with WebSocket based repor
 
 This allows cross-application monitoring stats sharing through WebSockets, allowing you to create central monitoring applications and dashboards.
 
+![ws-monitor usage](docs/ws-monitor.jpg?raw=true "ws-monitor usage")
+
 Still in Beta with very limited functionality. More options and customizability coming soon.
 
 ## Installation
