@@ -4,6 +4,8 @@ A runtime and server monitor for Node.js applications with WebSocket based repor
 
 This allows cross-application monitoring stats sharing through WebSockets, allowing you to create central monitoring applications and dashboards.
 
+![ws-monitor usage](docs/ws-monitor.jpg?raw=true "ws-monitor usage")
+
 Still in Beta with very limited functionality. More options and customizability coming soon.
 
 ## Installation
@@ -77,15 +79,17 @@ The monitor object constructor accepts several parameters,
 var monitor = new WSMonitor({
                             port : 10080,
                             pollInterval : 1000,
-                            debug : true
+                            debug : true,
+                            logger : yourLogger
                             });
 ```
 
 | Property  | Default   | Description |
 |-----------|-----------|-------------|
-| port          | 8080   | The port on which the WebSocket server of the monitor will be started |
-| pollInterval  | 5000   | The interval in which the parameters are checked and reported, in milliseconds |
-| debug         | false  | Whether the debug messages should be printed out to console |
+| port          | 8080      | The port on which the WebSocket server of the monitor will be started |
+| pollInterval  | 5000      | The interval in which the parameters are checked and reported, in milliseconds |
+| debug         | false     | Whether the debug messages should be printed out to console |
+| logger        | undefined | If you want to log the monitor’s events to your application logs and has a standard logger instance (such as a Winston based logger), you can pass it along with the 'logger' parameter. The logger object should support 'info', 'debug', and 'error' functions |
 
 ## Output Format
 
@@ -109,7 +113,15 @@ The WS-Monitor will keep track of the clients connected to it. And, if it detect
 
 ## Node.js version compatibility
 
-Tested up to Node.js `v5.11.0`
+Tested on Node.js `v0.10.*`, `0.12.*`, `v5.11.0`, and `v6.1.0`.
+
+On Node.js `v6.*.*`, you will get the following deprecated warning,
+
+    DeprecationWarning: process.EventEmitter is deprecated. Use require('events') instead.
+
+, but will not affect functionality.
+
+The warning is coming from the depending `monitor` module, and is tracked in the upstream issue [#29](https://github.com/lorenwest/node-monitor/issues/29)
 
 ## License
 
